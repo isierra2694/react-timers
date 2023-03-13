@@ -1,0 +1,11 @@
+{
+  "short_name": "React Timers",
+  "name": "Create timers and keep track of your activities",
+  "icons": [
+
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
