@@ -1,8 +1,17 @@
+import Navbar from "./Navbar";
+import Router from "./util/Router";
+
 function App() {
     return (
-        <div>
-            <h1>React timers</h1>
-        </div>
+        <>
+            <Navbar />
+            <div id="wrapper">
+                <div className="page-container">
+                    <Router />
+                </div>
+            </div>
+            
+        </>
     );
 }
 
