@@ -1,44 +1,48 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 
-const TimeEntry = ({ inputClassName, disabled, onTimeChange }) => {
-    const [seconds, setSeconds] = useState(0);
-    const [minutes, setMinutes] = useState(0);
+const TimeEntry = ({ newTime, onTimeChange, inputClassName }) => {
     const [hours, setHours] = useState(0);
-    const onTimeChangeRef = useRef(onTimeChange);
+    const [minutes, setMinutes] = useState(0);
+    const [seconds, setSeconds] = useState(0);
 
     useEffect(() => {
-        onTimeChangeRef.current(seconds + minutes * 60 + hours * 60 * 60);
-    }, [seconds, minutes, hours])
+        const newHours = Math.floor(newTime / 3600);
+        const newMinutes = Math.floor((newTime - newHours * 3600) / 60);
+        const newSeconds = Math.floor(newTime - newHours * 3600 - newMinutes * 60);
 
-    const onSecondsChange = (e) => {
-        const seconds = parseInt(e.target.value);
-        if (seconds < 59 && seconds >= 0) {
-            setSeconds(seconds);
-        }
-        if (e.target.value === '') setSeconds(0);
-    }
+        setHours(newHours);
+        setMinutes(newMinutes);
+        setSeconds(newSeconds);
+    }, [newTime]);
 
-    const onMinutesChange = (e) => {
-        const minutes = parseInt(e.target.value);
-        if (minutes < 59 && minutes >= 0) {
-            setMinutes(minutes);
-        }
-        if (e.target.value === '') setMinutes(0);
-    }
+    const onInputChange = (e) => {
+        const name = e.target.name;
+        let value = parseInt(e.target.value);
+        let updatedTime;
 
-    const onHoursChange = (e) => {
-        const hours = parseInt(e.target.value);
-        if (hours <= 99 && hours >= 0) {
-            setHours(hours);
+        if (name === 'hours') {
+            setHours(value);
+            updatedTime = value * 3600 + minutes * 60 + seconds;
         }
-        if (e.target.value === '') setHours(0);
+        else if (name === 'minutes') {
+            setMinutes(value); 
+            updatedTime = hours * 3600 + value * 60 + seconds;
+        }
+        else if (name === 'seconds') {
+            setSeconds(value);
+            updatedTime = hours * 3600 + minutes * 60 + value;
+        }
+
+        onTimeChange(updatedTime);
     }
 
     return (
-        <div className="time-entry-container">
-            <input className={inputClassName} onChange={onSecondsChange} maxLength={2} disabled={!!disabled}></input>
-            <input className={inputClassName} onChange={onMinutesChange} maxLength={2} disabled={!!disabled}></input>
-            <input className={inputClassName} onChange={onHoursChange} maxLength={2} disabled={!!disabled}></input>
+        <div className="time-entry">
+            <input type="number" name="hours" min="0" max="99" step="1" className={inputClassName} onChange={onInputChange} value={hours}/>
+            <span className="time-entry-separator">:</span>
+            <input type="number" name="minutes" min="0" max="59" step="1" className={inputClassName} onChange={onInputChange} value={minutes}/>
+            <span className="time-entry-separator">:</span>
+            <input type="number" name="seconds" min="0" max="59" step="1" className={inputClassName} onChange={onInputChange} value={seconds}/>
         </div>
     );
 }

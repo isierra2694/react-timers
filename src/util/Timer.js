@@ -25,6 +25,7 @@ const Timer = () => {
     }
 
     const onTimeChange = (seconds) => {
+        console.log(seconds);
         setRunning(false);
         setTotalTime(seconds * 10);
         setDuration(seconds * 10);
@@ -41,7 +42,7 @@ const Timer = () => {
                 <input className="timer-title" name="title" placeholder="Timer title..."></input>
             </div>
             <div className="timer-card-progress-container">
-                <CircleProgressBar size={200} progress={getPercentageLeft()} label={<TimeEntry onTimeChange={onTimeChange} inputClassName="time-entry-input"/>}/>
+                <CircleProgressBar size={200} progress={getPercentageLeft()} label={<TimeEntry newTime={duration / 10} onTimeChange={onTimeChange} inputClassName="time-entry-input"/>}/>
             </div>
             <div className="timer-card-controls-container">
                 <button className="timer-card-button" onClick={resetTime}>
