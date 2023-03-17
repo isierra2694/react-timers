@@ -17,7 +17,9 @@ const TimeEntry = ({ newTime, onTimeChange, inputClassName }) => {
 
     const onInputChange = (e) => {
         const name = e.target.name;
+        if (e.target.value.length > 1 && e.target.value.charAt(0) === '0') e.target.value = e.target.value.slice(1);
         let value = parseInt(e.target.value);
+        if (isNaN(value)) value = 0;
         let updatedTime;
 
         if (name === 'hours') {
@@ -38,11 +40,52 @@ const TimeEntry = ({ newTime, onTimeChange, inputClassName }) => {
 
     return (
         <div className="time-entry">
-            <input type="number" name="hours" min="0" max="99" step="1" className={inputClassName} onChange={onInputChange} value={hours}/>
-            <span className="time-entry-separator">:</span>
-            <input type="number" name="minutes" min="0" max="59" step="1" className={inputClassName} onChange={onInputChange} value={minutes}/>
-            <span className="time-entry-separator">:</span>
-            <input type="number" name="seconds" min="0" max="59" step="1" className={inputClassName} onChange={onInputChange} value={seconds}/>
+            <div>
+                <button onClick={() => {
+                    const newHours = Math.min(hours + 1, 99);
+                    setHours(newHours);
+                    const updatedTime = newHours * 3600 + minutes * 60 + seconds;
+                    onTimeChange(updatedTime);
+                }}>&#8743;</button>
+                <input name="hours" className={inputClassName} onChange={onInputChange} value={hours}/>
+                <button onClick={() => {
+                    const newHours = Math.max(hours - 1, 0);
+                    setHours(newHours);
+                    const updatedTime = newHours * 3600 + minutes * 60 + seconds;
+                    onTimeChange(updatedTime);
+                }}>&#8744;</button>
+            </div>
+            <div>
+                <button onClick={() => {
+                    const newMinutes = Math.min(minutes + 1, 59);
+                    setMinutes(newMinutes);
+                    const updatedTime = hours * 3600 + newMinutes * 60 + seconds;
+                    onTimeChange(updatedTime);
+                }}>&#8743;</button>
+                <input name="minutes" className={inputClassName} onChange={onInputChange} value={minutes}/>
+                <button onClick={() => {
+                    const newMinutes = Math.max(minutes - 1, 0);
+                    setMinutes(newMinutes);
+                    const updatedTime = hours * 3600 + newMinutes * 60 + seconds;
+                    onTimeChange(updatedTime);
+                }}>&#8744;</button>
+            </div>
+            <div>
+                <button onClick={() => {
+                    const newSeconds = Math.min(seconds + 1, 59);
+                    setSeconds(newSeconds);
+                    const updatedTime = hours * 3600 + minutes * 60 + newSeconds;
+                    onTimeChange(updatedTime);
+                }}>&#8743;</button>
+                <input name="seconds" className={inputClassName} onChange={onInputChange} value={seconds}/>
+                <button onClick={() => {
+                    const newSeconds = Math.max(seconds - 1, 0);
+                    setSeconds(newSeconds);
+                    const updatedTime = hours * 3600 + minutes * 60 + newSeconds;
+                    onTimeChange(updatedTime);
+                }}>&#8744;</button>
+            </div>
+            
         </div>
     );
 }
