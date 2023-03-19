@@ -39,7 +39,7 @@ const TimeEntry = ({ newTime, onTimeChange, inputClassName }) => {
     }
 
     return (
-        <div className="time-entry">
+        <div className="time-entry-container">
             <div>
                 <button onClick={() => {
                     const newHours = Math.min(hours + 1, 99);
@@ -47,7 +47,7 @@ const TimeEntry = ({ newTime, onTimeChange, inputClassName }) => {
                     const updatedTime = newHours * 3600 + minutes * 60 + seconds;
                     onTimeChange(updatedTime);
                 }}>&#8743;</button>
-                <input name="hours" className={inputClassName} onChange={onInputChange} value={hours}/>
+                <input name="hours" className={inputClassName} onChange={onInputChange} value={hours.toString().padStart(2, '0')}/>
                 <button onClick={() => {
                     const newHours = Math.max(hours - 1, 0);
                     setHours(newHours);
@@ -62,7 +62,7 @@ const TimeEntry = ({ newTime, onTimeChange, inputClassName }) => {
                     const updatedTime = hours * 3600 + newMinutes * 60 + seconds;
                     onTimeChange(updatedTime);
                 }}>&#8743;</button>
-                <input name="minutes" className={inputClassName} onChange={onInputChange} value={minutes}/>
+                <input name="minutes" className={inputClassName} onChange={onInputChange} value={minutes.toString().padStart(2, '0')}/>
                 <button onClick={() => {
                     const newMinutes = Math.max(minutes - 1, 0);
                     setMinutes(newMinutes);
@@ -77,7 +77,7 @@ const TimeEntry = ({ newTime, onTimeChange, inputClassName }) => {
                     const updatedTime = hours * 3600 + minutes * 60 + newSeconds;
                     onTimeChange(updatedTime);
                 }}>&#8743;</button>
-                <input name="seconds" className={inputClassName} onChange={onInputChange} value={seconds}/>
+                <input name="seconds" className={inputClassName} onChange={onInputChange} value={seconds.toString().padStart(2, '0')}/>
                 <button onClick={() => {
                     const newSeconds = Math.max(seconds - 1, 0);
                     setSeconds(newSeconds);

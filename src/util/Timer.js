@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 import CircleProgressBar from './CircleProgressBar';
 import TimeEntry from './TimeEntry';
@@ -8,14 +8,26 @@ const Timer = () => {
     const [duration, setDuration] = useState(0);
     const [running, setRunning] = useState(false);
 
+    const previousTimeRef = useRef();
+
     useEffect(() => {
         let interval;
-        if (duration > 0 && running) {
+
+        if (running && duration > 0) {
+            previousTimeRef.current = Date.now();
             interval = setInterval(() => {
-                setDuration(time => time - 1);
+                setDuration(prevTime => {
+                    const currentTime = Date.now();
+                    const deltaTime = (currentTime - previousTimeRef.current) / 100;
+                    previousTimeRef.current = currentTime;
+                    return (prevTime - deltaTime) > 0 ? prevTime - deltaTime : 0;
+                });
             }, 100);
+        } 
+        else if (duration === 0) {
+            setRunning(false);
         }
-        else if (duration === 0) setRunning(false);
+
         return () => clearInterval(interval);
     }, [running, duration]);
 
@@ -25,7 +37,6 @@ const Timer = () => {
     }
 
     const onTimeChange = (seconds) => {
-        console.log(seconds);
         setRunning(false);
         setTotalTime(seconds * 10);
         setDuration(seconds * 10);
