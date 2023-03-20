@@ -15,20 +15,20 @@ const Timer = () => {
 
         if (running && duration > 0) {
             previousTimeRef.current = Date.now();
-            interval = setInterval(() => {
+            interval = setTimeout(() => {
                 setDuration(prevTime => {
                     const currentTime = Date.now();
-                    const deltaTime = (currentTime - previousTimeRef.current) / 100;
+                    const deltaTime = (currentTime - previousTimeRef.current) / 50;
                     previousTimeRef.current = currentTime;
                     return (prevTime - deltaTime) > 0 ? prevTime - deltaTime : 0;
                 });
-            }, 100);
+            }, 50);
         } 
         else if (duration === 0) {
             setRunning(false);
         }
 
-        return () => clearInterval(interval);
+        return () => clearTimeout(interval);
     }, [running, duration]);
 
     const getPercentageLeft = () => {
@@ -38,8 +38,8 @@ const Timer = () => {
 
     const onTimeChange = (seconds) => {
         setRunning(false);
-        setTotalTime(seconds * 10);
-        setDuration(seconds * 10);
+        setTotalTime(seconds * 20);
+        setDuration(seconds * 20);
     }
 
     const resetTime = () => {
@@ -53,7 +53,7 @@ const Timer = () => {
                 <input className="timer-title" name="title" placeholder="Timer title..."></input>
             </div>
             <div className="timer-card-progress-container">
-                <CircleProgressBar size={200} progress={getPercentageLeft()} label={<TimeEntry newTime={duration / 10} onTimeChange={onTimeChange} inputClassName="time-entry-input"/>}/>
+                <CircleProgressBar size={200} progress={getPercentageLeft()} label={<TimeEntry newTime={duration / 20} onTimeChange={onTimeChange} inputClassName="time-entry-input"/>}/>
             </div>
             <div className="timer-card-controls-container">
                 <button className="timer-card-button" onClick={resetTime}>
