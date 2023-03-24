@@ -1,50 +1,47 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useReducer } from 'react';
 
 import CircleProgressBar from './CircleProgressBar';
 import TimeEntry from './TimeEntry';
 
 const Timer = () => {
     const [totalTime, setTotalTime] = useState(0);
-    const [duration, setDuration] = useState(0);
+    const duration = useRef(0);
     const [running, setRunning] = useState(false);
-
+    const [, forceUpdate] = useReducer(x => x + 1, 0);
     const previousTimeRef = useRef();
 
     useEffect(() => {
         let interval;
-
-        if (running && duration > 0) {
+        if (running && duration.current > 0) {
             previousTimeRef.current = Date.now();
-            interval = setTimeout(() => {
-                setDuration(prevTime => {
-                    const currentTime = Date.now();
-                    const deltaTime = (currentTime - previousTimeRef.current) / 50;
-                    previousTimeRef.current = currentTime;
-                    return (prevTime - deltaTime) > 0 ? prevTime - deltaTime : 0;
-                });
-            }, 50);
+            interval = setInterval(() => {
+                const deltaTime = (Date.now() - previousTimeRef.current) / 100;
+                previousTimeRef.current = Date.now();
+                duration.current = (duration.current - deltaTime) > 0 ? duration.current - deltaTime : 0;
+                forceUpdate();
+            }, 100);
         } 
-        else if (duration === 0) {
+        else if (duration.current === 0) {
             setRunning(false);
         }
 
-        return () => clearTimeout(interval);
+        return () => clearInterval(interval);
     }, [running, duration]);
 
     const getPercentageLeft = () => {
         if (totalTime === 0) return 0;
-        return (duration / totalTime * 100);
+        return (duration.current / totalTime * 100);
     }
 
     const onTimeChange = (seconds) => {
         setRunning(false);
-        setTotalTime(seconds * 20);
-        setDuration(seconds * 20);
+        setTotalTime(seconds * 10);
+        duration.current = seconds * 10
     }
 
     const resetTime = () => {
         setRunning(false);
-        setDuration(totalTime);
+        duration.current = totalTime;
     }
 
     return (
@@ -53,7 +50,7 @@ const Timer = () => {
                 <input className="timer-title" name="title" placeholder="Timer title..."></input>
             </div>
             <div className="timer-card-progress-container">
-                <CircleProgressBar size={200} progress={getPercentageLeft()} label={<TimeEntry newTime={duration / 20} onTimeChange={onTimeChange} inputClassName="time-entry-input"/>}/>
+                <CircleProgressBar size={200} progress={getPercentageLeft()} label={<TimeEntry newTime={duration.current / 10} onTimeChange={onTimeChange} inputClassName="time-entry-input"/>}/>
             </div>
             <div className="timer-card-controls-container">
                 <button className="timer-card-button" onClick={resetTime}>

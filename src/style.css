@@ -68,12 +68,13 @@ body {
 .timers-container {
     margin: 1em 0 1em 0;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    grid-template-columns: repeat(4, 1fr);
 }
 
 .timer-card {
     display: block;
-    max-width: 300px;
+    max-width: 250px;
     border-radius: 10px;
     padding: 10px;
     background-color: #29292e;
@@ -104,6 +105,7 @@ body {
     align-items: center;
     justify-content: center;
     gap: 1em;
+    margin-bottom: 10px;
 }
 
 .timer-card-button {
@@ -146,18 +148,25 @@ body {
     display: flex;
     align-items: flex-start;
     flex-direction: row;
-
 }
 
 .time-entry-input {
-    width: 40px;
+    width: 45px;
     height: 50px;
     background: none;
     border: none;
     color: #fff;
-    font-size: 30px;
+    font-size: 35px;
     font-family: 'Source Code Pro', monospace;
     text-align: center;
+}
+
+.time-entry-container:hover button {
+    display: inline-block;
+}
+
+.time-entry-container button {
+    display: none;
 }
 
 .svg-pi-wrapper {

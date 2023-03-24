@@ -2,9 +2,9 @@ const CircleProgressBar = (props) => {
     let {
         size = 150,
         progress = 0,
-        trackWidth = 10,
+        trackWidth = 15,
         trackColor = `#3b3b42`,
-        indicatorWidth = 10,
+        indicatorWidth = 13,
         indicatorColor = `#07c`,
         indicatorCap = `round`,
         label = ``,
