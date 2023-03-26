@@ -1,8 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap');
 
 body {
-	background: linear-gradient(-45deg, #8415a0, #1992ca);
-	height: 100vh;
+	background-color: #121214;
     color: #fff;
     font-family: 'Source Code Pro', monospace;
     margin: 0;
@@ -72,9 +71,33 @@ body {
     grid-template-columns: repeat(4, 1fr);
 }
 
+@media screen and (max-width: 1250px) {
+    .timers-container {
+        grid-template-columns: auto auto auto;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    .timers-container {
+        grid-template-columns: auto auto;
+    }
+}
+
+@media screen and (max-width: 660px) {
+    .timers-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .time-entry-incrementer {
+        display: inline-block !important;
+    }
+}
+
 .timer-card {
     display: block;
-    max-width: 250px;
+    width: 250px;
     border-radius: 10px;
     padding: 10px;
     background-color: #29292e;
@@ -153,6 +176,7 @@ body {
 .time-entry-input {
     width: 45px;
     height: 50px;
+    padding: 0;
     background: none;
     border: none;
     color: #fff;
@@ -161,12 +185,17 @@ body {
     text-align: center;
 }
 
-.time-entry-container:hover button {
+.timer-card-progress-container:hover .time-entry-incrementer {
     display: inline-block;
 }
 
-.time-entry-container button {
+.time-entry-incrementer {
     display: none;
+    background: none;
+    outline: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
 }
 
 .svg-pi-wrapper {

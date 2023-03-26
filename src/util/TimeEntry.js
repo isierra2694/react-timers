@@ -41,49 +41,85 @@ const TimeEntry = ({ newTime, onTimeChange, inputClassName }) => {
     return (
         <div className="time-entry-container">
             <div>
-                <button onClick={() => {
+                <button className="time-entry-incrementer" onClick={() => {
                     const newHours = Math.min(hours + 1, 99);
                     setHours(newHours);
                     const updatedTime = newHours * 3600 + minutes * 60 + seconds;
                     onTimeChange(updatedTime);
-                }}>&#8743;</button>
+                }}>
+                    <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g id="Arrow / Caret_Up_MD">
+                            <path id="Vector" d="M8 14L12 10L16 14" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        </g>
+                    </svg>
+                </button>
                 <input name="hours" className={inputClassName} onChange={onInputChange} value={hours.toString().padStart(2, '0')}/>
-                <button onClick={() => {
+                <button className="time-entry-incrementer" onClick={() => {
                     const newHours = Math.max(hours - 1, 0);
                     setHours(newHours);
                     const updatedTime = newHours * 3600 + minutes * 60 + seconds;
                     onTimeChange(updatedTime);
-                }}>&#8744;</button>
+                }}>
+                    <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g id="Arrow / Caret_Down_MD">
+                            <path id="Vector" d="M16 10L12 14L8 10" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        </g>
+                    </svg>
+                </button>
             </div>
             <div>
-                <button onClick={() => {
+                <button className="time-entry-incrementer" onClick={() => {
                     const newMinutes = Math.min(minutes + 1, 59);
                     setMinutes(newMinutes);
                     const updatedTime = hours * 3600 + newMinutes * 60 + seconds;
                     onTimeChange(updatedTime);
-                }}>&#8743;</button>
+                }}>
+                    <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g id="Arrow / Caret_Up_MD">
+                            <path id="Vector" d="M8 14L12 10L16 14" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        </g>
+                    </svg>
+                </button>
                 <input name="minutes" className={inputClassName} onChange={onInputChange} value={minutes.toString().padStart(2, '0')}/>
-                <button onClick={() => {
+                <button className="time-entry-incrementer" onClick={() => {
                     const newMinutes = Math.max(minutes - 1, 0);
                     setMinutes(newMinutes);
                     const updatedTime = hours * 3600 + newMinutes * 60 + seconds;
                     onTimeChange(updatedTime);
-                }}>&#8744;</button>
+                }}>
+                    <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g id="Arrow / Caret_Down_MD">
+                            <path id="Vector" d="M16 10L12 14L8 10" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        </g>
+                    </svg>
+                </button>
             </div>
             <div>
-                <button onClick={() => {
+                <button className="time-entry-incrementer" onClick={() => {
                     const newSeconds = Math.min(seconds + 1, 59);
                     setSeconds(newSeconds);
                     const updatedTime = hours * 3600 + minutes * 60 + newSeconds;
                     onTimeChange(updatedTime);
-                }}>&#8743;</button>
+                }}>
+                    <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g id="Arrow / Caret_Up_MD">
+                            <path id="Vector" d="M8 14L12 10L16 14" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        </g>
+                    </svg>
+                </button>
                 <input name="seconds" className={inputClassName} onChange={onInputChange} value={seconds.toString().padStart(2, '0')}/>
-                <button onClick={() => {
+                <button className="time-entry-incrementer" onClick={() => {
                     const newSeconds = Math.max(seconds - 1, 0);
                     setSeconds(newSeconds);
                     const updatedTime = hours * 3600 + minutes * 60 + newSeconds;
                     onTimeChange(updatedTime);
-                }}>&#8744;</button>
+                }}>
+                    <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g id="Arrow / Caret_Down_MD">
+                            <path id="Vector" d="M16 10L12 14L8 10" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        </g>
+                    </svg>
+                </button>
             </div>
             
         </div>
