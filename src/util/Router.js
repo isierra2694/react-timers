@@ -6,8 +6,8 @@ import About from '../pages/About';
 function Router() {
     return (
         <Routes>
-            <Route path='/' element={<Home />} />
-            <Route path='/about' element={<About />} />
+            <Route path='/react-timers' element={<Home />} />
+            <Route path='/react-timers/about' element={<About />} />
         </Routes>
     )
 }

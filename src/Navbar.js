@@ -6,12 +6,12 @@ const Navbar = () => {
         <div className="navbar-wrapper">
             <div className="navbar">
                 <div className="navbar-content">
-                    <Link to="/" className="site-logo">
+                    <Link to="/react-timers" className="site-logo">
                         <h2>react-timers</h2>
                     </Link>
                     <div className="nav-list">
                         <ul>
-                            <CustomLink to="/about">about</CustomLink>
+                            <CustomLink to="/react-timers/about">about</CustomLink>
                             <CustomLink to="https://github.com/isierra2694/react-timers">github</CustomLink>
                         </ul>
                     </div>
