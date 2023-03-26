@@ -6,7 +6,7 @@ const Navbar = () => {
         <div className="navbar-wrapper">
             <div className="navbar">
                 <div className="navbar-content">
-                    <Link to="/react-timers" className="site-logo">
+                    <Link to="/react-timers/" className="site-logo">
                         <h2>react-timers</h2>
                     </Link>
                     <div className="nav-list">
