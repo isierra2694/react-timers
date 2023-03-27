@@ -3,63 +3,72 @@ import { useState, useEffect, useRef, useReducer } from 'react';
 import CircleProgressBar from './CircleProgressBar';
 import TimeEntry from './TimeEntry';
 
+// 'Timer' part of the timer.
 const Timer = ({ id, propsTotalTime, propsDuration, propsChangeTime, propsRemoveTimer }) => {
     const [totalTime, setTotalTime] = useState(propsTotalTime);
     const duration = useRef(propsDuration);
     const [name, setName] = useState('');
 
     const [running, setRunning] = useState(false);
-    const [, forceUpdate] = useReducer(x => x + 1, 0);
     const previousTimeRef = useRef();
+    const [, forceUpdate] = useReducer(x => x + 1, 0); // we do a little trolling
 
     useEffect(() => {
         let interval;
         if (running && duration.current > 0) {
             previousTimeRef.current = Date.now();
             interval = setInterval(() => {
+                // calculate delta time and subtract it from duration
                 const deltaTime = (Date.now() - previousTimeRef.current) / 100;
                 previousTimeRef.current = Date.now();
                 duration.current = duration.current - deltaTime;
+                // check if timer is complete
                 if (duration.current < 0) {
                     duration.current = 0;
                     setRunning(false);
+                    // eslint-disable-next-line
                     const done = new Notification(name !== '' ? name + ' is done!' : 'Timer is done!');
                 }
                 forceUpdate();
             }, 100);
         }
         return () => clearInterval(interval);
-    }, [running, duration]);
+    }, [running, duration, name]);
 
+    // get percentage of timer left
     const getPercentageLeft = () => {
         if (totalTime === 0) return 0;
         return (duration.current / totalTime * 100);
     }
 
+    // when TimeEntry changes value handle that
     const onTimeChange = (seconds) => {
         setRunning(false);
         setTotalTime(seconds * 10);
         duration.current = seconds * 10;
-
     }
 
+    // set running if duration is positive
     const playPause = () => {
         if (duration.current > 0) {
             setRunning(!running);
         }
     }
 
+    // reset time to starting time
     const resetTime = () => {
         setRunning(false);
         duration.current = totalTime;
-        forceUpdate();
+        forceUpdate(); // goofy trick since we need to rerender after updating duration
     }
 
+    // on remove timer button pressed alert parent component
     const removeTimer = () => {
         console.log(id);
         propsRemoveTimer(id);
     }
 
+    // when the name is changed set the name
     const onNameChange = (e) => {
         setName(e.target.value);
     }

@@ -5,6 +5,7 @@ const TimeEntry = ({ newTime, onTimeChange, inputClassName }) => {
     const [minutes, setMinutes] = useState(0);
     const [seconds, setSeconds] = useState(0);
 
+    // parse newTime when it is updated
     useEffect(() => {
         const newHours = Math.floor(newTime / 3600);
         const newMinutes = Math.floor((newTime - newHours * 3600) / 60);
@@ -15,6 +16,7 @@ const TimeEntry = ({ newTime, onTimeChange, inputClassName }) => {
         setSeconds(newSeconds);
     }, [newTime]);
 
+    // when the inputs change handle updating hours, minuts, seconds and call onTimeChange from parent component
     const onInputChange = (e) => {
         const name = e.target.name;
         if (e.target.value.length > 1 && e.target.value.charAt(0) === '0') e.target.value = e.target.value.slice(1);

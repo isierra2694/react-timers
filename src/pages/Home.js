@@ -6,7 +6,7 @@ const Home = () => {
     const id = useRef(0);
 
     useEffect(() => {
-        if (Notification.permission !== 'granted') Notification.requestPermission();
+        //if (Notification.permission !== 'granted') Notification.requestPermission();
     }, [])
 
     const addNewTimer = () => {
