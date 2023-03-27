@@ -6,6 +6,8 @@ import TimeEntry from './TimeEntry';
 const Timer = ({ id, propsTotalTime, propsDuration, propsChangeTime, propsRemoveTimer }) => {
     const [totalTime, setTotalTime] = useState(propsTotalTime);
     const duration = useRef(propsDuration);
+    const [name, setName] = useState('');
+
     const [running, setRunning] = useState(false);
     const [, forceUpdate] = useReducer(x => x + 1, 0);
     const previousTimeRef = useRef();
@@ -21,6 +23,7 @@ const Timer = ({ id, propsTotalTime, propsDuration, propsChangeTime, propsRemove
                 if (duration.current < 0) {
                     duration.current = 0;
                     setRunning(false);
+                    const done = new Notification(name !== '' ? name + ' is done!' : 'Timer is done!');
                 }
                 forceUpdate();
             }, 100);
@@ -49,6 +52,7 @@ const Timer = ({ id, propsTotalTime, propsDuration, propsChangeTime, propsRemove
     const resetTime = () => {
         setRunning(false);
         duration.current = totalTime;
+        forceUpdate();
     }
 
     const removeTimer = () => {
@@ -56,10 +60,14 @@ const Timer = ({ id, propsTotalTime, propsDuration, propsChangeTime, propsRemove
         propsRemoveTimer(id);
     }
 
+    const onNameChange = (e) => {
+        setName(e.target.value);
+    }
+
     return (
         <div className="timer-card">
             <div className="timer-card-title-container">
-                <input className="timer-title" name="title" placeholder="Timer title..."></input>
+                <input className="timer-title" name="title" value={name} onChange={onNameChange} placeholder="Timer title..."></input>
             </div>
             <div className="timer-card-progress-container">
                 <CircleProgressBar size={200} progress={getPercentageLeft()} label={<TimeEntry newTime={duration.current / 10} onTimeChange={onTimeChange} inputClassName="time-entry-input"/>}/>
